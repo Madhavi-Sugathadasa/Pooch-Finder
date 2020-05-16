@@ -1,0 +1,269 @@
+* {
+
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-color: #ffffff;
+    margin: 0;
+}
+
+header,
+footer {
+    max-width: 1200px;
+    padding: 0;
+    margin: auto;
+}
+
+
+.header {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    padding: 0;
+    margin: 0;
+}
+
+.header-title {
+    color: #ffffff;
+    background-color: #cc2d2d;
+    font-size: 3rem;
+    text-align: center;
+    margin: 0 auto;
+    vertical-align: middle;
+}
+
+footer {
+    color: #ffffff;
+    background-color: #cc2d2d;
+    font-size: 1rem;
+    text-align: center;
+    padding: 10px;
+}
+
+#logo-img {
+    margin: 10px;
+    width: 80px;
+    height: 80px;
+}
+
+.header-img {
+    width: 100%;
+    height: 100%;
+}
+
+.navbar,
+main {
+    max-width: 1200px;
+    margin: auto;
+}
+
+
+.login-form {
+    margin: 7% auto;
+    border-radius: 5px;
+    padding: 20px;
+    width: 85%;
+    border: solid 3px #cc2d2d;
+}
+
+.desc {
+    color: #ffffff;
+    background-color: #cc2d2d;
+    font-size: 1.2rem;
+    max-width: 1200px;
+    text-align: center;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+.top-div {
+    margin: 15px auto;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 400;
+}
+
+.top-title {
+    color: #cc2d2d;
+}
+
+fieldset {
+    background-color: #eeeeee;
+    display: block;
+    margin-left: 2px;
+    margin-right: 2px;
+    padding-top: 0.35em;
+    padding-bottom: 0.625em;
+    padding-left: 0.75em;
+    padding-right: 0.75em;
+    border: 2px solid #cc2d2d;
+    border-radius: 5px;
+}
+
+legend {
+    background-color: #cc2d2d;
+    color: #ffffff;
+    padding: 5px 10px;
+    width: auto;
+    font-size: 1rem;
+    border-radius: 5px;
+}
+
+.refine-btn {
+    text-align: right;
+}
+
+.sort_list {
+    margin: 10px auto;
+    text-align: right;
+}
+
+.carousel-thumbnails .carousel-indicators img {
+    max-width: 6.25rem;
+    height: auto;
+    overflow: hidden;
+    display: block;
+}
+
+.carousel-indicators li::before {
+    position: absolute;
+    top: -10px;
+    left: 0;
+    display: inline-block;
+    width: 100%;
+    height: 10px;
+    content: "";
+}
+
+.carousel-indicators li::after {
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    display: inline-block;
+    width: 100%;
+    height: 10px;
+    content: "";
+}
+
+.carousel-thumbnails .carousel-indicators li {
+    height: auto;
+    width: 6.25rem;
+    max-width: 6.25rem;
+    border: none;
+}
+
+.carousel-thumbnails .carousel-indicators .active {
+    height: auto;
+    width: auto;
+    opacity: 1;
+}
+
+#location-div {
+    position: relative;
+}
+
+.ui-autocomplete {
+    z-index: 1;
+    cursor: default;
+    margin-top: 2px;
+    list-style: none;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    max-height: 200px;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+    /* add padding to account for vertical scrollbar */
+    padding-right: 20px;
+}
+
+.ui-autocomplete > li {
+    padding: 3px 20px;
+}
+
+.ui-autocomplete > li.ui-state-focus {
+    background-color: #DDD;
+}
+
+.ui-helper-hidden-accessible {
+    display: none;
+}
+
+div.ui-slider-range.ui-widget-header {
+    background: #464646;
+}
+
+#slider-range .ui-state-default,
+.ui-widget-content .ui-state-default {
+    background: #cc2d2d;
+}
+
+#slider {
+    width: 350px;
+}
+
+.thumbs-imgs {
+    margin-bottom: -4.69rem;
+}
+
+.detail-container {
+    margin-top: 6rem;
+    margin-bottom: 2rem;
+    padding: 20px;
+}
+
+.pic_holder {
+    position: relative;
+}
+
+.pic-delete {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+#overlay_message {
+    z-index: 2000;
+    position: fixed;
+    display: none;
+    width: 100%;
+    /* Full width (cover the whole page) */
+    height: 100%;
+    /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.68);
+}
+
+#text_message {
+    z-index: 3000;
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    font-size: 1rem;
+    color: #000000;
+    background-color: #ffffff;
+    border: 1px solid #cc2d2d;
+    padding: 30px;
+    border-radius: 5px;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+}
+
+
+
+@media (min-width: 876px) {
+
+    .login-form {
+        width: 60%;
+
+    }
+
+}
