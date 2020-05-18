@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+{% block title %}
+Post an Ad
+{% endblock %}
+{% block body %}
+{% load template_filters %}
+<div class="my-4 px-5">
+<form action="{% url 'edit_ad' ad_item.id %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+     <div class="form-group row">
+        <label for="active" class="col-sm-2 col-form-label">Active</label>
+        <div class="col-sm-6 ">
+            <input type="checkbox" name="active" id="active" {% if ad_item.active %}checked{% endif %}>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="price" class="col-sm-2 col-form-label">Price (AUD)</label>
+        <div class="col-sm-6 ">
+            <input name="price" id="price" class="form-control" type="number" min="0" placeholder="price" required value="{{ad_item.price}}">
+            <input type="checkbox" name="negotiable" id="negotiable" {% if ad_item.negotiable %}checked{% endif %}> Negotiable
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="title" class="col-sm-2 col-form-label">Title</label>
+        <div class="col-sm-6 ">
+            <input name="title" id="title" class="form-control" type="text" placeholder="A descriptive title will attract buyers to your ad." required value="{{ad_item.title}}">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="summary" class="col-sm-2 col-form-label">Summary Description</label>
+        <div class="col-sm-6 ">
+            <textarea name="summary" id="summary" class="form-control" type="text" placeholder="summary description" required >{{ad_item.summary_desc}}</textarea>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="description" class="col-sm-2 col-form-label">Description</label>
+        <div class="col-sm-6 ">
+            <textarea name="description" id="description" class="form-control" type="text" placeholder="description" required>{{ad_item.desc}}</textarea>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="gender" class="col-sm-2 col-form-label">Gender</label>
+        <div class="col-sm-6 ">
+            <select name="gender" id="gender" class="form-control">
+                {% for gender in genders %}
+                <option value="{{gender.id}}" {% if ad_item.gender.id == gender.id %} selected {% endif %}>{{gender.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="age" class="col-sm-2 col-form-label">Age</label>
+        <div class="col-sm-6 ">
+            <select name="age" id="age" class="form-control">
+                {% for age in ages %}
+                <option value="{{age.id}}" {% if ad_item.age.id == age.id %} selected {% endif %}>{{age.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="breed" class="col-sm-2 col-form-label">Breed</label>
+        <div class="col-sm-6 ">
+            <select name="breed" id="breed" class="form-control">
+                {% for breed in breeds %}
+                <option value="{{breed.id}}" {% if ad_item.breed.id == breed.id %} selected {% endif %}>{{breed.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="dog_type" class="col-sm-2 col-form-label">Type</label>
+        <div class="col-sm-6 ">
+            <select name="dog_type" id="dog_type" class="form-control">
+                {% for type in types %}
+                <option value="{{type.id}}" {% if ad_item.dog_type.id == type.id %} selected {% endif %}>{{type.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="microchip_number" class="col-sm-2 col-form-label">Microchip Number(s)</label>
+        <div class="col-sm-6 ">
+            <input name="microchip_number" id="microchip_number" class="form-control" type="text" placeholder="Microchip Number(s)"  value="{% if ad_item.microchip_number %}{{ad_item.microchip_number}}{% endif %}">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="breeder_id" class="col-sm-2 col-form-label">Breeder Id</label>
+        <div class="col-sm-6 ">
+            <input name="breeder_id" id="breeder_id" class="form-control" type="text" placeholder="Breeder Id" value="{% if ad_item.breeder_id %}{{ad_item.breeder_id}}{% endif %}" >
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="contact_name" class="col-sm-2 col-form-label">Contact Name</label>
+        <div class="col-sm-6 ">
+            <input name="contact_name" id="contact_name" class="form-control" type="text" placeholder="Contact Name" value="{{ad_item.contact_name}}" required>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="contact_email" class="col-sm-2 col-form-label">Email</label>
+        <div class="col-sm-6 ">
+            <input name="contact_email" id="contact_email" class="form-control" type="text" placeholder="Contact Email" value="{{ad_item.email}}"  required>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="mobile" class="col-sm-2 col-form-label">Mobile</label>
+        <div class="col-sm-6 ">
+            <input name="mobile" id="mobile" class="form-control" type="text" placeholder="Mobile Phone Number" required value="{{ad_item.mobile}}">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="location" class="col-sm-2 col-form-label">Item Location</label>
+        <div class="col-sm-6">
+            <div id="location-div">
+                <input type="text" id="location" name="location" class="ui-autocomplete form-control" placeholder="Suburb, State, Postcode" required value="{{ad_item.item_location.suburb}}, {{ad_item.item_location.state}}, {{ad_item.item_location.postcode}}">
+            </div>
+        </div>
+    </div>
+
+
+    <div class="form-group row">
+        <label for="img_1" class="col-sm-2 col-form-label">Uplaod Photos</label>
+        <div class="col-sm-6">
+           {% for picture in pictures %}
+            <div class="pic_holder my-4">
+                <img src="/Media/{{picture.image}}" alt="img_{{forloop.counter}}" class="w-100">
+                <a href="{% url 'delete_pic' ad_id=ad_item.id pic_id=picture.id %}"  class="btn btn-danger pic-delete" title="Delete">X</a>
+            </div>
+            {% endfor %}
+            {% for i in loop_times %}
+            <div class="custom-file mb-3">
+                <input type="file" class="custom-file-input" name="img_{{i}}" id="img_{{i}}" {% if i == 1 %}required{% endif %}>
+                <label class="custom-file-label" for="img_{{i}}">Choose Image {{i}}</label>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+
+
+    <div class="border border-danger rounded my-3 p-3 bg-light" ><h5>Terms &amp; Conditions</h5>
+        <p><input type="checkbox" name="terms" required> I accept the terms &amp; conditions.</p>
+    </div>
+    <button type="submit" class="btn btn-danger">Update</button>
+</form>
+</div>
+{% endblock %}
