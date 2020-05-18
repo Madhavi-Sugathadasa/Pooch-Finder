@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}
+Error
+{% endblock %}
+
+{% block body %}
+<div class="border border-danger rounded my-3 p-2 text-center">
+    <h2 class="text-center text-danger my-3">Error</h2>
+    <h4 class="no-item-msg">{{ message }}</h4>
+    <a href="{% url 'index' %}" class="btn btn-danger">Home</a>
+</div>
+{% endblock %}
