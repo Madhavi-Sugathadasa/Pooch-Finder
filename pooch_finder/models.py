@@ -45,3 +45,26 @@ class State(models.Model):
     
     def __str__(self):
         return f"{self.name}, {self.code}"
+    
+class Ad_Item(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="ad_user")
+    price = models.FloatField()
+    negotiable = models.BooleanField(default=False)
+    title = models.CharField(max_length=200)
+    summary_desc = models.CharField(max_length=1000)
+    desc = models.CharField(max_length=4000)
+    gender = models.ForeignKey(Gender, on_delete=models.DO_NOTHING, related_name="ad_gender")
+    age = models.ForeignKey(Age_Cat, on_delete=models.DO_NOTHING, related_name="ad_age")
+    breed = models.ForeignKey(Breed, on_delete=models.DO_NOTHING, related_name="ad_breed")
+    dog_type = models.ForeignKey(Dog_Type, on_delete=models.DO_NOTHING, related_name="ad_type")
+    microchip_number =  models.CharField(max_length=200, null=True, blank=True)
+    breeder_id = models.CharField(max_length=200, null=True, blank=True)
+    contact_name = models.CharField(max_length=64, default="")
+    email = models.CharField(max_length=64, default="")
+    mobile = models.CharField(max_length=64, default="")
+    item_location = models.ForeignKey(Location, on_delete=models.DO_NOTHING, related_name="ad_location", default="")
+    date_time = models.DateTimeField(default=datetime.now())
+    active = models.BooleanField(default=True)
+    
+    def __str__(self):
+        return f"{self.id} - {self.title}"
