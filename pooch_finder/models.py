@@ -68,3 +68,13 @@ class Ad_Item(models.Model):
     
     def __str__(self):
         return f"{self.id} - {self.title}"
+    
+def photo_path_(instance, filename):
+    return (conf_settings.MEDIA_PATH+'/{0}/{1}').format(instance.ad_item.id, filename)
+
+class Picture(models.Model):
+    ad_item = models.ForeignKey(Ad_Item, on_delete=models.CASCADE, related_name="ad_item")
+    image = models.ImageField(upload_to = photo_path_)
+    
+    def __str__(self):
+        return f"{self.image}"
