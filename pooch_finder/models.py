@@ -16,3 +16,9 @@ class Dog_Type(models.Model):
     
     def __str__(self):
         return f"{self.name}"
+    
+class Age_Cat(models.Model):
+    name = models.CharField(max_length=15)
+    
+    def __str__(self):
+        return f"{self.name}"
