@@ -38,3 +38,10 @@ class Location(models.Model):
     
     def __str__(self):
         return f"{self.suburb}, {self.state}, {self.postcode}"
+    
+class State(models.Model):
+    code = models.CharField(max_length=4)
+    name = models.CharField(max_length=30)
+    
+    def __str__(self):
+        return f"{self.name}, {self.code}"
