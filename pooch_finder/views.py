@@ -82,3 +82,9 @@ def logout_view(request):
     return render(request, "users/login.html", {"message": None})
 
 
+# forgot password, recover through an email
+def forgot_password(request):
+    if request.method == 'POST':
+        return password_reset(request, from_email=request.POST.get('email'))
+    else:
+        return render(request, 'users/forgot_password.html')
