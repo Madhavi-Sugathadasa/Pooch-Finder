@@ -195,3 +195,20 @@ def index(request):
     context.update({'page_obj': page_obj, "photo_items":dict_photo_items, "states":states,"breeds":breeds,"genders":genders,"ages":ages,})
     
     return render(request, "index.html", context)
+
+
+# more details of a selected Ad
+@login_required(login_url='login')
+def ad_more_details(request, ad_id):
+    
+    try:
+        item = Ad_Item.objects.get(pk=ad_id)
+        photo_items = Picture.objects.filter(ad_item =item)
+    except Ad_Item.DoesNotExist:
+        return render(request, "error.html", {"message": "item does not exist."})
+    except Picture.DoesNotExist:
+        return render(request, "error.html", {"message": "photo items does not exist."})
+    context = {
+      "item": item,"photo_items":photo_items, 
+    }
+    return render(request, "item.html", context)
