@@ -454,4 +454,24 @@ def edit_ad(request, ad_id):
             loop_times = range(1,7)
         context ={"breeds":breeds, "genders":genders, "ages":ages, "types":types, "ad_item":ad_item,"pictures":pictures,"loop_times":loop_times}
         return render(request, "edit_ad.html", context)
+    
+
+# delete already uploaded photos
+@login_required(login_url='login')
+def delete_pic(request, ad_id, pic_id):
+    ad_item = None
+    try:
+        ad_item = Ad_Item.objects.get(user = request.user, pk = ad_id )
+        if not ad_item:
+            return render(request, "error.html", {"message": "You are not authorised to update this item"})
+        
+        picture = Picture.objects.get(ad_item = ad_item, pk = pic_id )
+        if not picture:
+            return render(request, "error.html", {"message": "You are not authorised to update this item"})
+        picture.delete()
+    except Ad_Item.DoesNotExist:
+            return render(request, "error.html", {"message": "You are not authorised to update this item"})
+    except Picture.DoesNotExist:
+            return render(request, "error.html", {"message": "You are not authorised to update this item"})
+    return HttpResponseRedirect(reverse("edit_ad", args=[ad_id]))
   
