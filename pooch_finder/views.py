@@ -474,4 +474,44 @@ def delete_pic(request, ad_id, pic_id):
     except Picture.DoesNotExist:
             return render(request, "error.html", {"message": "You are not authorised to update this item"})
     return HttpResponseRedirect(reverse("edit_ad", args=[ad_id]))
+
+
+# send an email to seller inquiring about selected ad
+@login_required(login_url='login')
+def send_message(request):
+    if request.is_ajax():
+        ad_id = request.POST.get('ad_id', None)
+        message = request.POST.get('message', None)
+        if not ad_id or not message:
+            data = {
+                "result":"ERROR"
+            }
+            return JsonResponse(data)
+        else:
+            try:
+                ad_item = Ad_Item.objects.get(pk = ad_id)
+                if not ad_item:
+                    data = {
+                        "result":"ERROR"
+                    }
+                    return JsonResponse(data)
+                else:
+                    try:
+                        send_mail("RE: " + ad_item.title, message, conf_settings.EMAIL_HOST_USER, [request.user.email, ad_item.email])
+                        data = {
+                            "result":"SUCCESS"
+                        }
+                        return JsonResponse(data)
+                    except BadHeaderError:
+                        data = {
+                            "result":"ERROR"
+                        }
+                        return JsonResponse(data)
+                    
+            except Ad_Item.DoesNotExist:
+                data = {
+                    "result":"ERROR"
+                }
+                return JsonResponse(data)
+    
   
