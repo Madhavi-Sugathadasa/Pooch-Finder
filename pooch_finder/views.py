@@ -225,3 +225,101 @@ def autocomplete_location(request):
             'list': list,
         }
         return JsonResponse(data)
+
+    
+# post a new Ad    
+@login_required(login_url='login')
+def post_ad(request):
+    if request.method == "POST":
+        try:
+            ad_item = Ad_Item()
+            ad_item.user = request.user
+            price = request.POST["price"]
+            ad_item.price = float(price)
+            negotiable = request.POST.get("negotiable",None)
+            if negotiable:
+                ad_item.negotiable = True
+            title = request.POST["title"]
+            ad_item.title = title
+            summary_desc = request.POST["summary"]
+            ad_item.summary_desc = summary_desc
+            desc = request.POST["description"]
+            ad_item.desc = desc
+            
+            gender = request.POST["gender"]
+            ad_item.gender = Gender.objects.get(pk=gender)
+            
+            age = request.POST["age"]
+            ad_item.age = Age_Cat.objects.get(pk=age)
+            
+            breed = request.POST["breed"]
+            ad_item.breed = Breed.objects.get(pk=breed)
+            
+            dog_type  = request.POST["dog_type"]
+            ad_item.dog_type = Dog_Type.objects.get(pk=dog_type)
+            
+            microchip_number = request.POST["microchip_number"]
+            ad_item.microchip_number = microchip_number
+            
+            breeder_id = request.POST["breeder_id"]
+            ad_item.breeder_id = breeder_id
+            
+            contact_name = request.POST["contact_name"]
+            ad_item.contact_name = contact_name
+            
+            contact_email = request.POST["contact_email"]
+            ad_item.email = contact_email
+            
+            mobile = request.POST["mobile"]
+            ad_item.mobile = mobile
+            
+            location_str = request.POST["location"]
+            if location_str:
+                location_data  = location_str.split(", ")
+                if len(location_data) == 3:
+                    location = Location.objects.get(Q(postcode=location_data[2]) & Q(suburb=location_data[0]) & Q(state=location_data[1]))
+                    if location:
+                        ad_item.item_location = location
+                    else:
+                        return render(request, "error.html", {"message": "Invalid item location."})
+                else:
+                    return render(request, "error.html", {"message": "Invalid item location."})
+            else:
+                return render(request, "error.html", {"message": "Invalid item location."})
+            
+            ad_item.date_time = datetime.now()
+            ad_item.active = True
+            ad_item.save()
+            
+            for i in range(1,6):
+                img = request.FILES.get('img_' + str(i))
+                if img:
+                    picture = Picture()
+                    picture.ad_item = ad_item
+                    picture.image = img
+                    picture.save()
+            return HttpResponseRedirect(reverse("index"))
+            
+        except Gender.DoesNotExist:
+            return render(request, "error.html", {"message": "Invalid gender type."})
+        except Age_Cat.DoesNotExist:
+            return render(request, "error.html", {"message": "Invalid age category."})
+        except Breed.DoesNotExist:
+            return render(request, "error.html", {"message": "Invalid breed category."})
+        except Dog_Type.DoesNotExist:
+            return render(request, "error.html", {"message": "Invalid dog category."})
+        except Location.DoesNotExist:
+            return render(request, "error.html", {"message": "Invalid item location."})
+        
+    else:
+        
+        breeds = Breed.objects.all().order_by('name')
+        genders = Gender.objects.all()
+        ages = Age_Cat.objects.all()
+        types = Dog_Type.objects.all()
+        context ={"breeds":breeds, "genders":genders, "ages":ages, "types":types, }
+        return render(request, "post_ad.html", context)
+    
+    
+
+  
