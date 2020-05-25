@@ -321,5 +321,29 @@ def post_ad(request):
         return render(request, "post_ad.html", context)
     
     
+# view Ads posted by login user
+@login_required(login_url='login')
+def view_my_ads(request):
+    status = request.GET.get('status','')
+    ad_items = None
+    
+    if status and status == 'active':
+        ad_items = Ad_Item.objects.filter(user = request.user, active = True)
+    elif status and status == 'inactive':
+        ad_items = Ad_Item.objects.filter(user = request.user, active = False)
+    else:
+        status = 'active'
+        ad_items = Ad_Item.objects.filter(user = request.user, active = True)
+    dict_photo_items ={}
+
+    for ad_item in ad_items:
+    
+        photo_items = Picture.objects.filter(ad_item =ad_item)
+        if photo_items:
+            dict_photo_items[ad_item.id] = photo_items
+    context ={"ad_items":ad_items, "photo_items":dict_photo_items,"status":status,}
+    return render(request, "my_ads.html", context)
+
+
 
   
