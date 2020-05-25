@@ -346,4 +346,112 @@ def view_my_ads(request):
 
 
 
+# edit details of already posted Ad
+@login_required(login_url='login')
+def edit_ad(request, ad_id):
+    ad_item = None
+    try:
+        ad_item = Ad_Item.objects.get(user = request.user, pk = ad_id )
+        if not ad_item:
+            return render(request, "error.html", {"message": "You are not authorised to update this item"})
+    except Ad_Item.DoesNotExist:
+            return render(request, "error.html", {"message": "You are not authorised to update this item"})
+
+    if request.method == "POST":
+        try:
+            ad_item.user = request.user
+            price = request.POST["price"]
+            ad_item.price = float(price)
+            negotiable = request.POST.get("negotiable",None)
+            if negotiable:
+                ad_item.negotiable = True
+            title = request.POST["title"]
+            ad_item.title = title
+            summary_desc = request.POST["summary"]
+            ad_item.summary_desc = summary_desc
+            desc = request.POST["description"]
+            ad_item.desc = desc
+
+            gender = request.POST["gender"]
+            ad_item.gender = Gender.objects.get(pk=gender)
+
+            age = request.POST["age"]
+            ad_item.age = Age_Cat.objects.get(pk=age)
+
+            breed = request.POST["breed"]
+            ad_item.breed = Breed.objects.get(pk=breed)
+
+            dog_type  = request.POST["dog_type"]
+            ad_item.dog_type = Dog_Type.objects.get(pk=dog_type)
+
+            microchip_number = request.POST["microchip_number"]
+            ad_item.microchip_number = microchip_number
+
+            breeder_id = request.POST["breeder_id"]
+            ad_item.breeder_id = breeder_id
+
+            contact_name = request.POST["contact_name"]
+            ad_item.contact_name = contact_name
+
+            contact_email = request.POST["contact_email"]
+            ad_item.email = contact_email
+
+            mobile = request.POST["mobile"]
+            ad_item.mobile = mobile
+
+            location_str = request.POST["location"]
+            if location_str:
+                location_data  = location_str.split(", ")
+                if len(location_data) == 3:
+                    location = Location.objects.get(Q(postcode=location_data[2]) & Q(suburb=location_data[0]) & Q(state=location_data[1]))
+                    if location:
+                        ad_item.item_location = location
+                    else:
+                        return render(request, "error.html", {"message": "Invalid item location."})
+                else:
+                    return render(request, "error.html", {"message": "Invalid item location."})
+            else:
+                return render(request, "error.html", {"message": "Invalid item location."})
+
+            ad_item.date_time = datetime.now()
+            
+            active = request.POST.get("active",None)
+            if active:
+                ad_item.active = True
+            else:
+                ad_item.active = False
+            ad_item.save()
+
+            for i in range(1,7):
+                img = request.FILES.get('img_' + str(i))
+                if img:
+                    picture = Picture()
+                    picture.ad_item = ad_item
+                    picture.image = img
+                    picture.save()
+            return HttpResponseRedirect(reverse("index"))
+
+        except Gender.DoesNotExist:
+            return render(request, "error.html", {"message": "Invalid gender type."})
+        except Age_Cat.DoesNotExist:
+            return render(request, "error.html", {"message": "Invalid age category."})
+        except Breed.DoesNotExist:
+            return render(request, "error.html", {"message": "Invalid breed category."})
+        except Dog_Type.DoesNotExist:
+            return render(request, "error.html", {"message": "Invalid dog category."})
+        except Location.DoesNotExist:
+            return render(request, "error.html", {"message": "Invalid item location."})
+
+    else:
+        pictures = Picture.objects.filter(ad_item = ad_item).order_by('id')
+        breeds = Breed.objects.all().order_by('name')
+        genders = Gender.objects.all()
+        ages = Age_Cat.objects.all()
+        types = Dog_Type.objects.all()
+        if pictures:
+            loop_times = range(len(pictures)+1,7)
+        else:
+            loop_times = range(1,7)
+        context ={"breeds":breeds, "genders":genders, "ages":ages, "types":types, "ad_item":ad_item,"pictures":pictures,"loop_times":loop_times}
+        return render(request, "edit_ad.html", context)
   
