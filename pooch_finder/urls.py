@@ -15,6 +15,7 @@ urlpatterns = [
     path("logout", views.logout_view, name="logout"),
     path("post_ad", views.post_ad, name="post_ad"),
     path("<int:ad_id>", views.ad_more_details, name="ad_more_details"),
+    path("my_ads", views.view_my_ads, name="my_ads"),
     
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
