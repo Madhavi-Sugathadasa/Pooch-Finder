@@ -21,6 +21,7 @@ urlpatterns = [
     path("send_message", views.send_message, name="send_message"),
     path("delete_pic/<int:ad_id>/<int:pic_id>", views.delete_pic, name="delete_pic"),
     path("forgot_password", PasswordResetView.as_view(), name="forgot_password"),
+    path("password_reset_confirm/<uidb64>/<token>/", PasswordResetConfirmView.as_view(), name="password_reset_confirm"),
     
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
