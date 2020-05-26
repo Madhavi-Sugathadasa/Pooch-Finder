@@ -17,6 +17,7 @@ urlpatterns = [
     path("<int:ad_id>", views.ad_more_details, name="ad_more_details"),
     path("my_ads", views.view_my_ads, name="my_ads"),
     path("autocomplete_location", views.autocomplete_location, name="autocomplete_location"),
+    path("edit_ad/<int:ad_id>", views.edit_ad, name="edit_ad"),
     
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
