@@ -30,3 +30,35 @@ Each list item display a summary of Ad details including price, title, summary d
 **Pagination** is available on this page. Currently displays five Ads per page & it is a configurable parameter.
 
 ---
+
+3. **_More Details page_**
+
+Once users click on “More Details” link from a selected Ad, they are able to see additional details about the Ad. Especially they are able to **send messages to the seller** from this page.
+
+---
+
+4. **_Post an Ad_**
+
+Once login, users (dog breeders) are able to post an Ad about puppies or dogs that are for sale.
+
+Following details needed to provide in order to publish an Ad:
+```
+    Selling price and whether price is negotiable or not
+    title of Ad
+    summary description
+    full description
+    gender (select from a dropdown list)
+    age (select from a dropdown list)
+    breed (select from a dropdown list)
+    type (whether pure bred or x-breed, (select from a dropdown list)
+    microchip numbers if available
+    breeder id if registered
+    contact name
+    email
+    mobile
+    item location (select suburb, state and postcode from autocomplete dropdown)
+    upload up to 6 images. At leases one image required
+```
+finally user need to accept terms and condition of posting an Ad.
+
+---
