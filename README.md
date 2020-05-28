@@ -82,14 +82,14 @@ Used Django’s in built Authentication and Authorisation  system for user regis
 
 **8 tables** were used in the sqlite3 DB apart from the Django’s inbuilt user tables.
 ```
-    **_States table_** - Keep a list of all states in Australia
-    **_Locations table_** - Keep list of all suburbs in Australia including their postcode, state, longitude and latitude. I was able to find a free csv file online with above details. I wrote a python function to insert data in to the table by reading the csv file
-    **_Breeds table_** - Keep a list of all dog breeds
-    **_Gender table_** - Keep a list  of all genders
-    **_Dog_types table_** - Keep a list  of all dog types (whether pure bred or x-breed)
-    **_Age_cats table_** - Keep a list of predefined age categories
-    **_Ad_items_** - Keep a list of all Ads posted by users
-    **_Pictures_** - photos related to each Ad
+    **States table** - Keep a list of all states in Australia
+    **Locations table** - Keep list of all suburbs in Australia including their postcode, state, longitude and latitude. I was able to find a free csv file online with above details. I wrote a python function to insert data in to the table by reading the csv file
+    **Breeds table** - Keep a list of all dog breeds
+    **Gender table** - Keep a list  of all genders
+    **Dog_types table** - Keep a list  of all dog types (whether pure bred or x-breed)
+    **Age_cats table** - Keep a list of predefined age categories
+    **Ad_items** - Keep a list of all Ads posted by users
+    **Pictures** - photos related to each Ad
 ```
 
 Following variables were configured for email send functionality
