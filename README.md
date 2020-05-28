@@ -62,3 +62,11 @@ Following details needed to provide in order to publish an Ad:
 finally user need to accept terms and condition of posting an Ad.
 
 ---
+
+5. **_View & Edit Ads posted by the logged in user_**
+
+There is a link at the top of navigation bar named “My Ads”. Once they click on this link, users are able to see list all active and inactive Ads which are posted by them (active and inactive items are listed in two separate tabs)
+Under each Ad there is a “Edit” link where users are able to edit the details of Ads
+
+
+---
